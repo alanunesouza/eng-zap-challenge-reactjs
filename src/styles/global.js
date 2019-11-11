@@ -23,7 +23,7 @@ export default createGlobalStyle`
     background-color: #4fbfa5;
   }
 
-  body, input, button {
+  body, input, button, a {
     font: 14px 'Roboto', sans-serif;
   }
 

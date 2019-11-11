@@ -1,10 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 
-import { Container } from './styles';
+import {
+  Container,
+  Title,
+  PortalButton,
+  PortalButtonContainer,
+  Card,
+} from './styles';
+import List from '~/components/List';
 
 export default function Portal() {
-  const [properties, setProperties] = useState([]);
+  const [portals] = useState([
+    {
+      name: 'vivareal',
+      alt: 'logo_vivareal',
+      logo: 'https://www.vivareal.com.br/anunciar-imoveis/img/vivareal.svg',
+      data: [],
+    },
+    {
+      name: 'grupozap',
+      alt: 'logo_grupozap',
+      logo: 'https://cjs.zapcorp.com.br/Content/img/logotipo_novo_zap.png',
+    },
+  ]);
+  const [portalSelected, setPortalSelected] = useState([]);
+  const [zapProperties, setZapProperties] = useState([]);
+  const [vivaRealProperties, setVivaRealProperties] = useState([]);
 
   useEffect(() => {
     const boundingBox = location => {
@@ -24,13 +46,15 @@ export default function Portal() {
         'http://grupozap-code-challenge.s3-website-us-east-1.amazonaws.com/sources/source-1.json';
       const grupoZap = [];
       const vivaReal = [];
-      let response = await api.get(url);
+      const response = await api.get(url);
 
-      response = response.data.filter(property => {
+      response.data.forEach(property => {
         const { usableAreas } = property;
         const { price, monthlyCondoFee } = property.pricingInfos;
         const { location } = property.address.geoLocation;
         const squareMeter = price / usableAreas;
+
+        if (location.lon === 0 && location.lat === 0) return;
 
         if (property.pricingInfos.businessType === 'SALE') {
           let minPriceForSquareMeter = 3500;
@@ -44,6 +68,7 @@ export default function Portal() {
           }
         } else if (
           monthlyCondoFee &&
+          JSON.parse(monthlyCondoFee) !== 0 &&
           Number.isInteger(JSON.parse(monthlyCondoFee))
         ) {
           let maxCondoFee = (price / 100) * 30;
@@ -56,13 +81,10 @@ export default function Portal() {
             vivaReal.push(property);
           }
         }
-
-        return location.lon !== 0 && location.lat !== 0;
       });
 
-      console.log(grupoZap, vivaReal);
-
-      setProperties(response);
+      setZapProperties(grupoZap);
+      setVivaRealProperties(vivaReal);
     }
 
     loadProperties();
@@ -70,7 +92,26 @@ export default function Portal() {
 
   return (
     <Container>
-      <text>teste</text>
+      <Title>Escolha um portal</Title>
+      <PortalButtonContainer>
+        {portals.map(portal => (
+          <PortalButton
+            key={portal.name}
+            portal={portal}
+            onClick={() => {
+              if (portal.name === 'vivareal') {
+                setPortalSelected(vivaRealProperties);
+              } else {
+                setPortalSelected(zapProperties);
+              }
+            }}
+          >
+            <img src={portal.logo} alt={portal.alt} />
+          </PortalButton>
+        ))}
+      </PortalButtonContainer>
+
+      <List portalSelected={portalSelected} />
     </Container>
   );
 }
