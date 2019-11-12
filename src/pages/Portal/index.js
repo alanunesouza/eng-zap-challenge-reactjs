@@ -6,7 +6,6 @@ import {
   Title,
   PortalButton,
   PortalButtonContainer,
-  Card,
 } from './styles';
 import List from '~/components/List';
 
@@ -25,6 +24,7 @@ export default function Portal() {
     },
   ]);
   const [portalSelected, setPortalSelected] = useState([]);
+  const [portalName, setPortalName] = useState([]);
   const [zapProperties, setZapProperties] = useState([]);
   const [vivaRealProperties, setVivaRealProperties] = useState([]);
 
@@ -92,7 +92,7 @@ export default function Portal() {
 
   return (
     <Container>
-      <Title>Escolha um portal</Title>
+      <Title>Escolha o portal que mais combina com o que você procura</Title>
       <PortalButtonContainer>
         {portals.map(portal => (
           <PortalButton
@@ -101,8 +101,10 @@ export default function Portal() {
             onClick={() => {
               if (portal.name === 'vivareal') {
                 setPortalSelected(vivaRealProperties);
+                setPortalName('vivareal');
               } else {
                 setPortalSelected(zapProperties);
+                setPortalName('grupozap');
               }
             }}
           >
@@ -111,7 +113,7 @@ export default function Portal() {
         ))}
       </PortalButtonContainer>
 
-      <List portalSelected={portalSelected} />
+      <List portalSelected={portalSelected} portalName={portalName} />
     </Container>
   );
 }

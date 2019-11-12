@@ -12,7 +12,7 @@ export const Title = styled.strong`
   display: flex;
   flex: 1;
   text-align: center;
-  font-size: 36px;
+  font-size: 22px;
   color: #fff;
   margin: 10px;
 `;
