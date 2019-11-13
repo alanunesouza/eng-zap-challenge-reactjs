@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Carousel from 'react-images';
+import Carousel, { Modal, ModalGateway } from 'react-images';
+import { Link } from 'react-router-dom';
 
-import { Container, Card, Content, Image } from './styles';
+import { Container, Card, Button } from './styles';
 
 export default function List({ portalSelected, portalName }) {
   const [properties, setProperties] = useState([]);
+  const [modalIsOpen, toggleModal] = useState(false);
+  const [offset, setOffset] = useState(1);
+  const [limit, setLimit] = useState(20);
+  const [imagesSelected, setImagesSelected] = useState([]);
 
   useEffect(() => {
     const propertiesFormatted = [...portalSelected];
@@ -37,41 +42,34 @@ export default function List({ portalSelected, portalName }) {
   return (
     <Container>
       {properties !== [] &&
-        properties.map((property, index) => (
-          <Card key={property.id} portalName={portalName}>
-            <h1>{formatTitle(property)}</h1>
-            <Carousel components={{ FooterCount }} views={property.images} />
-            <a>mais detalhes</a>
-            {/* {property.images.map(image => (
-                    <Image>
-                      <img src={image} alt={image} />
-                    </Image>
-                  ))}
-                </Carousel> */}
-            {/* <Content>
-              <h1>{formatTitle(property)}</h1>
+        properties.map(
+          (property, index) =>
+            index < limit && (
+              <Card key={property.id} portalName={portalName}>
+                <h1>{formatTitle(property)}</h1>
+                <Carousel
+                  components={{ FooterCount }}
+                  views={property.images}
+                />
 
-              <span>Deta</span>
+                <Link to={`/details/${property.id}`}>mais detalhes</Link>
+              </Card>
+            )
+        )}
 
-              {render}
+      {console.log(limit, properties.length)}
 
-              {property.bedrooms >= 1 && (
-                <span>
-                  {property.bedrooms}
-                  {property.bedrooms > 1 ? ' vagas' : ' vaga'}
-                </span>
-              )}
+      {properties.length > 1 && limit <= properties.length && (
+        <Button onClick={() => setLimit(limit + 20)}>ver mais</Button>
+      )}
 
-              {property.parkingSpaces >= 1 && (
-                <span>
-                  {property.parkingSpaces}
-                  {property.parkingSpaces > 1 ? ' vagas' : ' vaga'}
-                </span>
-              )}
-
-            </Content> */}
-          </Card>
-        ))}
+      <ModalGateway>
+        {modalIsOpen ? (
+          <Modal onClose={() => toggleModal(false)}>
+            <Carousel views={imagesSelected} />
+          </Modal>
+        ) : null}
+      </ModalGateway>
     </Container>
   );
 }

@@ -18,8 +18,6 @@ export const Card = styled.div`
   border-radius: 15px;
   margin: 20px;
   width: 30%;
-  height: 380px;
-  padding: 20px;
 
   h1 {
     font-size: 18px;
@@ -32,7 +30,7 @@ export const Card = styled.div`
     margin: 10px;
     border-radius: 15px;
     background-color: #4fbfa5;
-    width: 140px;
+    padding: 10px;
     height: 40px;
     align-items: center;
     justify-content: center;
@@ -52,7 +50,15 @@ export const Card = styled.div`
   }
 
   .css-br29ai {
-    height: 230px;
+    display: flex;
+    flex: 1;
+  }
+  .css-19oq51w {
+    display: none;
+  }
+
+  .css-1qrom1v img {
+    height: 300px;
   }
 `;
 
@@ -67,4 +73,22 @@ export const Content = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
+
+export const Button = styled.a`
+  display: flex;
+  margin: 10px;
+  border-radius: 25px;
+  background-color: #fff;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #4fbfa5;
+  cursor: pointer;
+
+  :hover {
+    opacity: 0.8;
+  }
 `;
