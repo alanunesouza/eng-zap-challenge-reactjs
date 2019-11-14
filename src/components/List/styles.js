@@ -17,7 +17,15 @@ export const Card = styled.div`
   background-color: #fff;
   border-radius: 15px;
   margin: 20px;
-  width: 30%;
+  width: 90%;
+
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+
+  @media (min-width: 900px) {
+    width: 40%;
+  }
 
   h1 {
     font-size: 18px;
@@ -59,6 +67,7 @@ export const Card = styled.div`
 
   .css-1qrom1v img {
     height: 300px;
+    width: 100%;
   }
 `;
 

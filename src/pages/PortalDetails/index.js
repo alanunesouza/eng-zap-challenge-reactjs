@@ -1,32 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Carousel, { Modal, ModalGateway } from 'react-images';
+import { FaSearchPlus, FaShower, FaCar } from 'react-icons/fa';
+import { IoIosBed } from 'react-icons/io';
 
-// import { Container } from './styles';
+import { Container, Card, Content, FooterImages } from './styles';
 
-export default function PortalDetails() {
-  return <div />;
+export default function PortalDetails({ location }) {
+  const [property] = useState(location.state.property);
+  const [modalIsOpen, toggleModal] = useState(false);
 
-  {
-    /* <Content>
-              <h1>{formatTitle(property)}</h1>
+  useEffect(() => {
+    console.log(property);
+  }, [property]);
 
-              <span>Deta</span>
+  const FooterCount = () => (
+    <FooterImages onClick={() => toggleModal(true)}>
+      <FaSearchPlus />
+      <span>ampliar</span>
+    </FooterImages>
+  );
 
-              {render}
+  return (
+    <Container>
+      <Card>
+        <Carousel components={{ FooterCount }} views={property.images} />
 
-              {property.bedrooms >= 1 && (
-                <span>
-                  {property.bedrooms}
-                  {property.bedrooms > 1 ? ' vagas' : ' vaga'}
-                </span>
-              )}
+        <h1>Detalhes do imóvel</h1>
 
-              {property.parkingSpaces >= 1 && (
-                <span>
-                  {property.parkingSpaces}
-                  {property.parkingSpaces > 1 ? ' vagas' : ' vaga'}
-                </span>
-              )}
+        <Content>
+          {property.bedrooms >= 1 && (
+            <span>
+              <IoIosBed />
+              {property.bedrooms}
+              {property.bedrooms > 1 ? ' vagas' : ' vaga'}
+            </span>
+          )}
 
-            </Content> */
-  }
+          {property.bathrooms >= 1 && (
+            <span>
+              <FaShower />
+              {property.bathrooms}
+              {property.bathrooms > 1 ? ' vagas' : ' vaga'}
+            </span>
+          )}
+
+          <span>{property.usableAreas} m²</span>
+
+          {property.parkingSpaces >= 1 && (
+            <span>
+              <FaCar />
+              {property.parkingSpaces}
+              {property.parkingSpaces > 1 ? ' vagas' : ' vaga'}
+            </span>
+          )}
+        </Content>
+      </Card>
+
+      <ModalGateway>
+        {modalIsOpen ? (
+          <Modal onClose={() => toggleModal(false)}>
+            <Carousel views={property.images} />
+          </Modal>
+        ) : null}
+      </ModalGateway>
+    </Container>
+  );
 }

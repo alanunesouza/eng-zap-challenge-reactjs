@@ -29,6 +29,7 @@ export default createGlobalStyle`
 
   a {
     text-decoration: none;
+    box-shadow: inset -2px -7px 11px rgba(80, 92, 51, 0.17);
   }
 
   ul {

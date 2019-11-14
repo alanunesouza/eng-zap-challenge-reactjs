@@ -8,7 +8,7 @@ export default function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={Portal} />
-      <Route path="/details/:portalId" exact component={PortalDetails} />
+      <Route path="/details" exact component={PortalDetails} />
     </Switch>
   );
 }
