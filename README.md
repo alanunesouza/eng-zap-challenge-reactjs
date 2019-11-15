@@ -1,68 +1,92 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Desafio Engenheiro FrontEnd - Grupo Zap
 
-## Available Scripts
+<hr>
 
-In the project directory, you can run:
+## :grupoZap: Sobre o desafio
 
-### `yarn start`
+Reformule a camada de apresentação e visual do site legado da maneira que preferir, com alguns comportamentos obrigatórios:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Quando se clicar em cima de um imóvel, deve apresentar uma tela de detalhe com as informações dele.
+Permitir a possibilidade do usuário navegar entre as fotos do imóvel na listagem e/ou detalhe.
+Paginação por 20 elementos.
+Interface responsiva (front) / adaptável para telas diferentes (apps).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+<hr>
 
-### `yarn test`
+## :grupoZap: Regras de negócio
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Um imóvel não é elegível em **NENHUM PORTAL** se:
 
-### `yarn build`
+1. Ele tem lat e lon iguais a 0.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Caso o imóvel seja para venda, ele é elegível para o portal ZAP se:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+1. O valor do metro quadrado (chave usableAreas) não pode ser menor/igual a R\$ 3.500,00 - apenas considerando imóveis que tenham usableAreas acima de 0 (imóveis com usableAreas = 0 não são elegíveis).
+2. Quando o imóvel estiver dentro do bounding box dos arredores do Grupo ZAP considere a regra de valor mínimo (do imóvel) 10% menor.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Caso o imóvel seja para aluguel, ele é elegível para o portal Viva Real se:
 
-### `yarn eject`
+1. O valor do condomínio não pode ser maior/igual que 30% do valor do aluguel - apenas aplicado para imóveis que tenham um monthlyCondoFee válido e numérico (imóveis com monthlyCondoFee não numérico ou inválido não são elegíveis).
+2. Quando o imóvel estiver dentro do bounding box dos arredores do Grupo ZAP considere a regra de valor máximo (do aluguel do imóvel) 50% maior.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<hr>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## como rodar localmente?
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Clone o projeto:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+git clone https://github.com/alanunesouza/eng-zap-challenge-reactjs.git
+```
 
-## Learn More
+Após clonar o projeto, insira os seguintes comandos em seu terminal:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+cd eng-zap-challenge-reactjs && yarn && yarn start:dev
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<hr>
 
-### Code Splitting
+## como fazer o deploy?
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Instale o heroku em sua máquina (https://id.heroku.com/login);
 
-### Analyzing the Bundle Size
+Clone o projeto:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```
+git clone https://github.com/alanunesouza/eng-zap-challenge-reactjs.git
+```
 
-### Making a Progressive Web App
+Após clonar o projeto, insira os seguintes comandos em seu terminal:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+```
+cd eng-zap-challenge-reactjs && yarn && yarn build
+```
 
-### Advanced Configuration
+Logue com sua conta Heroku com o seguinte comando:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+```
+heroku login
+```
 
-### Deployment
+Após logar com sua conta da heroku, digite:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+```
+heroku create test-deploy
+```
 
-### `yarn build` fails to minify
+e em seguida:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```
+yarn install
+git add .
+git commit -m "initial commit"
+heroku git:remote -a test-deploy
+git push heroku master
+```
+
+<hr>
+
+## DEMO
+
+https://eng-zap-challenge-production.herokuapp.com/
