@@ -101,7 +101,7 @@ export const FooterImages = styled.div`
   }
 `;
 
-export const Value = styled.text`
+export const Value = styled.span`
   font-size: 20px;
   font-weight: 500;
   padding: 15px;

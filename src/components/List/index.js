@@ -23,6 +23,10 @@ export default function List({ portalSelected, portalName }) {
     setProperties(propertiesFormatted);
   }, [portalSelected]);
 
+  useEffect(() => {
+    setLimit(20);
+  }, [portalName]);
+
   const FooterCount = () => <div />;
 
   return (
