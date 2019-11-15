@@ -1,8 +1,6 @@
 # Desafio Engenheiro FrontEnd - Grupo Zap
 
-<hr>
-
-## :grupoZap: Sobre o desafio
+## :Grupo Zap: Sobre o desafio
 
 Reformule a camada de apresentação e visual do site legado da maneira que preferir, com alguns comportamentos obrigatórios:
 
@@ -13,7 +11,7 @@ Interface responsiva (front) / adaptável para telas diferentes (apps).
 
 <hr>
 
-## :grupoZap: Regras de negócio
+## :Grupo Zap: Regras de negócio
 
 - Um imóvel não é elegível em **NENHUM PORTAL** se:
 
@@ -31,7 +29,7 @@ Interface responsiva (front) / adaptável para telas diferentes (apps).
 
 <hr>
 
-## como rodar localmente?
+## Como rodar localmente?
 
 Clone o projeto:
 
@@ -47,9 +45,9 @@ cd eng-zap-challenge-reactjs && yarn && yarn start:dev
 
 <hr>
 
-## como fazer o deploy?
+## Como fazer o deploy?
 
-Instale o heroku em sua máquina (https://id.heroku.com/login);
+Instale o heroku em sua máquina (https://devcenter.heroku.com/articles/heroku-cli#download-and-install);
 
 Clone o projeto:
 
@@ -87,6 +85,6 @@ git push heroku master
 
 <hr>
 
-## DEMO
+## Demo pelo Heroku
 
 https://eng-zap-challenge-production.herokuapp.com/
