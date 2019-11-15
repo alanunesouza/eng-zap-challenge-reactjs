@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
 
+import api from '../../services/api';
+import mockProperties from '~/mocks/properties';
 import {
   Container,
   Title,
@@ -48,7 +49,11 @@ export default function Portal() {
         'http://grupozap-code-challenge.s3-website-us-east-1.amazonaws.com/sources/source-1.json';
       const grupoZap = [];
       const vivaReal = [];
-      const response = await api.get(url);
+      const response = await api.get(url).catch(() => {
+        return {
+          data: mockProperties,
+        };
+      });
 
       response.data.forEach(property => {
         const { usableAreas } = property;
