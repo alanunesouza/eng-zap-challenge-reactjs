@@ -24,7 +24,7 @@ export default function Portal() {
     },
   ]);
   const [portalSelected, setPortalSelected] = useState([]);
-  const [portalName, setPortalName] = useState([]);
+  const [portalName, setPortalName] = useState('');
   const [zapProperties, setZapProperties] = useState([]);
   const [vivaRealProperties, setVivaRealProperties] = useState([]);
 
@@ -32,12 +32,14 @@ export default function Portal() {
     const boundingBox = location => {
       const { lon, lat } = location;
       const minlon = -46.693419;
-      const minlat = -23.568704;
       const maxlon = -46.641146;
+      const minlat = -23.568704;
       const maxlat = -23.546686;
+
       if (lon >= minlon && lon <= maxlon && lat >= minlat && lat <= maxlat) {
         return true;
       }
+
       return false;
     };
 
@@ -52,29 +54,31 @@ export default function Portal() {
         const { usableAreas } = property;
         const { price, monthlyCondoFee } = property.pricingInfos;
         const { location } = property.address.geoLocation;
-        const squareMeter = price / usableAreas;
 
         if (location.lon === 0 && location.lat === 0) return;
 
         if (property.pricingInfos.businessType === 'SALE') {
-          let minPriceForSquareMeter = 3500;
+          if (usableAreas <= 0) return;
+
+          let squareMeter = price / usableAreas;
+          const minPriceForSquareMeter = 3500;
 
           if (boundingBox(location)) {
-            minPriceForSquareMeter -= (minPriceForSquareMeter / 100) * 10;
+            const newPrice = price - (price / 100) * 10;
+            squareMeter = newPrice / usableAreas;
           }
 
-          if (usableAreas !== 0 && !(squareMeter <= minPriceForSquareMeter)) {
+          if (squareMeter > minPriceForSquareMeter) {
             grupoZap.push(property);
           }
         } else if (
-          monthlyCondoFee &&
-          JSON.parse(monthlyCondoFee) !== 0 &&
+          JSON.parse(monthlyCondoFee) > 0 &&
           Number.isInteger(JSON.parse(monthlyCondoFee))
         ) {
           let maxCondoFee = (price / 100) * 30;
 
           if (boundingBox(location)) {
-            maxCondoFee = (maxCondoFee / 100) * 50 + 1;
+            maxCondoFee = (maxCondoFee / 100) * 50;
           }
 
           if (JSON.parse(monthlyCondoFee) < maxCondoFee) {
@@ -90,23 +94,26 @@ export default function Portal() {
     loadProperties();
   }, []);
 
+  const setProperty = selectPortal => {
+    if (selectPortal === 'vivareal') {
+      setPortalSelected(vivaRealProperties);
+      setPortalName('vivareal');
+    } else {
+      setPortalSelected(zapProperties);
+      setPortalName('grupozap');
+    }
+  };
+
   return (
     <Container>
       <Title>Escolha o portal que mais combina com o que você procura</Title>
+
       <PortalButtonContainer>
         {portals.map(portal => (
           <PortalButton
             key={portal.name}
             portal={portal}
-            onClick={() => {
-              if (portal.name === 'vivareal') {
-                setPortalSelected(vivaRealProperties);
-                setPortalName('vivareal');
-              } else {
-                setPortalSelected(zapProperties);
-                setPortalName('grupozap');
-              }
-            }}
+            onClick={() => setProperty(portal.name)}
           >
             <img src={portal.logo} alt={portal.alt} />
           </PortalButton>

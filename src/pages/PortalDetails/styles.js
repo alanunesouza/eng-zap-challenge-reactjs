@@ -73,6 +73,11 @@ export const Content = styled.div`
   width: 60%;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 30px;
+
+  @media (max-width: 767px) {
+    width: 90%;
+  }
 
   span {
     padding: 10px;
@@ -94,4 +99,10 @@ export const FooterImages = styled.div`
   span {
     margin-left: 5px;
   }
+`;
+
+export const Value = styled.text`
+  font-size: 20px;
+  font-weight: 500;
+  padding: 15px;
 `;

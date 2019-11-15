@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 import { FaSearchPlus, FaShower, FaCar } from 'react-icons/fa';
 import { IoIosBed } from 'react-icons/io';
 
-import { Container, Card, Content, FooterImages } from './styles';
+import { Container, Card, Content, FooterImages, Value } from './styles';
 
 export default function PortalDetails({ location }) {
   const [property] = useState(location.state.property);
   const [modalIsOpen, toggleModal] = useState(false);
-
-  useEffect(() => {
-    console.log(property);
-  }, [property]);
 
   const FooterCount = () => (
     <FooterImages onClick={() => toggleModal(true)}>
@@ -25,6 +22,8 @@ export default function PortalDetails({ location }) {
       <Card>
         <Carousel components={{ FooterCount }} views={property.images} />
 
+        <Value>R$ {property.pricingInfos.price},00</Value>
+
         <h1>Detalhes do imóvel</h1>
 
         <Content>
@@ -35,7 +34,6 @@ export default function PortalDetails({ location }) {
               {property.bedrooms > 1 ? ' vagas' : ' vaga'}
             </span>
           )}
-
           {property.bathrooms >= 1 && (
             <span>
               <FaShower />
@@ -43,9 +41,7 @@ export default function PortalDetails({ location }) {
               {property.bathrooms > 1 ? ' vagas' : ' vaga'}
             </span>
           )}
-
           <span>{property.usableAreas} m²</span>
-
           {property.parkingSpaces >= 1 && (
             <span>
               <FaCar />
@@ -66,3 +62,7 @@ export default function PortalDetails({ location }) {
     </Container>
   );
 }
+
+PortalDetails.propTypes = {
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
+};

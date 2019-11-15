@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import Carousel from 'react-images';
 import { Link } from 'react-router-dom';
 
@@ -58,6 +58,7 @@ export default function List({ portalSelected, portalName }) {
   );
 }
 
-List.protoTypes = {
-  portalSelected: PropTypes.array.isRequired,
+List.propTypes = {
+  portalSelected: PropTypes.arrayOf(object).isRequired,
+  portalName: PropTypes.string.isRequired,
 };
