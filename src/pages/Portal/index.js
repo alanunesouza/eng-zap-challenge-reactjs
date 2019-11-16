@@ -119,6 +119,8 @@ export default function Portal() {
             key={portal.name}
             portal={portal}
             onClick={() => setProperty(portal.name)}
+            selected={portal.name === portalName}
+            portalName={portalName}
           >
             <img src={portal.logo} alt={portal.alt} />
           </PortalButton>
