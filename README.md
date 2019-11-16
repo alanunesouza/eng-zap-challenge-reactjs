@@ -83,6 +83,8 @@ heroku git:remote -a test-deploy
 git push heroku master
 ```
 
+Obs.: A conta free pela Heroku permite somente 2 ou 3 builds.
+
 <hr>
 
 ## Demo pelo Heroku
