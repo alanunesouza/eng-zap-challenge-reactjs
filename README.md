@@ -83,7 +83,7 @@ heroku git:remote -a test-deploy
 git push heroku master
 ```
 
-Obs.: A conta free pela Heroku permite somente 2 ou 3 builds.
+Obs.: A conta free pela Heroku tem limite de builds disponíveis.
 
 <hr>
 
